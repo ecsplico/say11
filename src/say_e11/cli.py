@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from say_e11.audio import play_pcm, write_wav
+from say_e11.audio import normalize, play_pcm, write_wav
 from say_e11.config import pick_provider
 from say_e11.providers import build_provider
 from say_e11.providers.deepgram import VOICE_PRESETS as DEEPGRAM_PRESETS
@@ -124,6 +124,7 @@ def main() -> None:
         except RuntimeError as e:
             print(str(e), file=sys.stderr)
             sys.exit(1)
+    pcm = normalize(pcm)
 
     if args.output:
         try:
